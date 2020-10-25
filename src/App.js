@@ -12,7 +12,7 @@ function App() {
         {adminRoutes.map( (item, index) => (
           <AdminTemplate exact={item.exact} Component={item.Component} path={item.path} key={index} />
         ) )}
-        <Route exact={true} path="/login" component={Login} />
+        <Route path="/login" component={Login} />
       </Switch>
     </BrowserRouter>
   );

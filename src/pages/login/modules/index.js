@@ -1,4 +1,9 @@
-import { LOGIN_FAILED, LOGIN_SUCCESS, LOGIN_REQUEST } from "./../constant";
+import {
+  LOGIN_FAILED,
+  LOGIN_SUCCESS,
+  LOGIN_REQUEST,
+  LOG_OUT,
+} from "./../constant";
 
 let initialState = {
   isLoading: false,
@@ -17,11 +22,10 @@ const loginReducer = (state = initialState, action) => {
       let stateUpdate = { ...state };
       stateUpdate.isLoading = false;
       // check is admin or not to show err
-      if(action.payload.maLoaiNguoiDung === "QuanTri") {
+      if (action.payload.maLoaiNguoiDung === "QuanTri") {
         stateUpdate.userLogin = action.payload;
         stateUpdate.isShowErrNotAdmin = false;
-      }
-      else {
+      } else {
         stateUpdate.isShowErrNotAdmin = true;
       }
 
@@ -31,7 +35,19 @@ const loginReducer = (state = initialState, action) => {
     }
 
     case LOGIN_FAILED: {
-      return { ...state, isLoading: false, isShowErr: true, isShowErrNotAdmin: false};
+      return {
+        ...state,
+        isLoading: false,
+        isShowErr: true,
+        isShowErrNotAdmin: false,
+      };
+    }
+
+    case LOG_OUT: {
+      let stateUpdate = { ...state };
+      stateUpdate.userLogin = undefined;
+      state = { ...stateUpdate };
+      return { ...state };
     }
 
     default: {

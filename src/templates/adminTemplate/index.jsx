@@ -1,14 +1,22 @@
 import React from "react";
-import { Header, Footer } from "../../components";
+import { Header } from "../../components";
 import { Redirect, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { LOGIN_SUCCESS } from "./../../pages/login/constant";
 
 const AdminLayout = (props) => {
-  if(!localStorage.getItem("accessToken")) return <Redirect to="/login" />
+  const dispatch = useDispatch();
+  if (!localStorage.getItem("accessToken")) {
+    return <Redirect to="/login" />;
+  } else {
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: JSON.parse(localStorage.getItem("userLogin")),
+    });
+  }
   return (
     <>
-      <Header />
-        {props.children}
-      <Footer />
+      <Header>{props.children}</Header>
     </>
   );
 };
@@ -27,4 +35,3 @@ export const AdminTemplate = ({ Component, ...props }) => {
     />
   );
 };
-
